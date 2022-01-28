@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.polyu.im_bird_sys.mapper.UserMapperCustomized" >
+    <select id="queryFriendRequestList" resultType="com.polyu.im_bird_sys.vo.FriendsRequestVO" parameterType="String">
+        select
+            tu.id as sendUserID,
+            tu.username as sendUsername,
+            tu.face_image_big as sendUserFaceImage,
+            tu.nickname as sendUserNickname
+        from friends_request fr
+        left join t_users tu
+        on fr.send_user_id = tu.id
+        where fr.accept_user_id = #{acceptUserID}
+    </select>
+
+    <!--用户的好友列表查询-->
+    <select id="queryMyFriends" resultType="com.polyu.im_bird_sys.vo.MyFriendsVO" parameterType="String">
+        select
+            tu.id as friendUserId,
+            tu.username as friendUsername,
+            tu.face_image_big as friendFaceImage,
+            tu.nickname as friendNickname
+        from my_friends mf
+        left join t_users tu
+        on tu.id = mf.my_friend_user_id
+        where  mf.my_user_id = #{userId}
+    </select>
+</mapper>
